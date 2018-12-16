@@ -1,0 +1,113 @@
+*mru.txt*       most recently used etc.
+
+ *Copyright* : Copyright (C) 2003-2009 Yegappan Lakshmanan
+             Permission is hereby granted to use and distribute this code,
+             with or without modifications, provided that this copyright
+             notice is copied with it. Like anything else that's free,
+             mru.vim is provided *as is* and comes with no warranty of any
+             kind, either expressed or implied. In no event will the copyright
+             holder be liable for any damamges resulting from the use of this
+             software.
+ *Modified*  : Arakawa, Tomoaki
+
+USAGE                           |mru-usage|
+KEYMAP                          |mru-keymap|
+VIEW                            |mru-view|
+VARIABLE                        |mru-variables|
+
+==============================================================================
+USAGE                                                              *mru-usage*
+
+You can launch MRU by the following commands:
+
+         Command           Explain ~
+        |:Mru|             - Most recently used command.
+        |:MruChkRead|      - MRU list checked file readable path.(|g:MRU_File|, |g:MRU_Directory|)
+
+  |:Mru|
+    |:Mru| command need parameter.(ex. :Mru File)
+        |File|          - Most recently used file.(|g:MRU_File|)
+        |Dir|           - Most recently used open file directory.(|g:MRU_Directory|)
+        |Buffer|        - MRU like buffer list.
+        |Mark|          - MRU like mark list.
+        |NetrwBookmark| - MRU like Netrw bookmark list.
+        |NetrwHistory|  - MRU like Netrw history list.
+        |NetrwFiler|    - netrw plugin like file list.
+        |GotoFile|      - MRU like user defined file/dir list.(|g:MRU_GotoFile|)
+        |Eval|        - MRU like user defined execute vimscript list.(|g:MRU_Eval|)
+        |Seek|          - Current path find file name list.
+        |Locate|        - Locate command result list.
+        |Mirror|        - Current buffer is copy to working buffer.
+
+  |:MruChkRead|
+    not readable file and path is delete.(|g:MRU_File|, |g:MRU_Directory|)
+
+==============================================================================
+KEYMAP                                                             *mru-keymap*
+
+ buffer local keymap.
+          KEYMAP            Explain~
+          <F1>              Show help.
+          <F2>              Open |g:MRU_GotoFile|.
+          <F3>              Open |g:MRU_Eval|.
+          <F4>              Show MRU setting status.
+          'u'               ReOpen MRU.
+          'q'               Close MRU.
+          <ESC>             Close MRU.
+          's'               Narrowing down.
+          'S'               Narrowing down(Exclude).
+          'n'               Search(vim like 'n').
+          'N'               Search(vim like 'N').
+          'r'               Sort.
+          'R'               Sort(Reverse).
+          'h'               resize(set to default).
+          'H'               resize(max height).
+
+ global keymap is nothing.
+ if you set keymap, sample is write down.
+
+ === sample ===
+ nnoremap <SPACE>mrf :Mru File<CR>
+ nnoremap <SPACE>mrd :Mru Dir<CR>
+ nnoremap <SPACE>mrk :Mru NetrwBookmark<CR>
+ nnoremap <SPACE>mrh :Mru NetrwHistory<CR>
+ nnoremap <SPACE>mrf :Mru NetrwFiler<CR>
+ nnoremap <SPACE>mrb :Mru Buffer<CR>
+ nnoremap <SPACE>mrm :Mru Mark<CR>
+ nnoremap <SPACE>mrg :Mru GotoFile<CR>
+ nnoremap <SPACE>mrs :Mru Eval<CR>
+ nnoremap <SPACE>mrs :Mru Seek<CR>
+ nnoremap <SPACE>mrl :Mru Locate<CR>
+ nnoremap <SPACE>mri :Mru Mirror<CR>
+
+==============================================================================
+VIEW                                                             *mru-view*
+
+ status-line is explain.
+
+ __MRU_File__ [abc | !def]              R1,C1        Top < 100
+ ~~~~~~~~~~~~ ~~~~~~~~~~~~              ~~~~~        ~~~~~~~~~~
+ BufferName   SearchHistory             Row,Column   Cursor position of percent
+
+==============================================================================
+VARIABLES                                                        *mru-variables*
+  |s:MRU_Config| = {}
+  |exsample|:
+      let s:MRU_Config['File'] = {
+	    \ 'bufname'    : '__MRU_File__',
+	    \ 'load'       : function('s:MRU_LoadList_File'),
+	    \ 'window'     : function('s:MRU_Open_Window_File'),
+	    \ 'complete'   : function('s:MRU_Complete'),
+	    \ 'statusline' : ['search'],
+	    \ 'pack'       : 'path',
+  
+  ['File']   : Mru ExCmd Parameter.
+  |bufname|    : Buffer name.
+  |load|       : Get Mru-list function.
+  |window|     : Configure Mru-list function.
+  |complete|   : auto-complete list function.
+  |statusline| : set statusline.
+  |pack|       : Show display format parameter.
+
+
+vim:tw=78:ts=8:ft=help:norl:
